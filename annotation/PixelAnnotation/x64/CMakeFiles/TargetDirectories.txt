@@ -1,0 +1,9 @@
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/rebuild_cache.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/upload_file.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/make_zip.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/PixelAnnotationTool.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/copy_pat.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/extract_appimage.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/edit_cache.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/linux_deploy_qt.dir
+/home/tenghui/PycharmProjects/mag/annotation/PixelAnnotation/x64/CMakeFiles/PixelAnnotationTool_automoc.dir

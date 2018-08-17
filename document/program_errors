@@ -21,5 +21,9 @@ sudo ldconfig
 4,单独安装webengine
 sudo apt-get install qtwebengine5-dev qtpositioning5-dev
 
-5.Qt5.9.1 安装目录
+5,Qt5.9.1 安装目录
 http://download.qt.io/official_releases/qt/5.9/5.9.1/
+
+6,fatal: Pathspec './about.html' is in submodule '_site'
+git rm --cached directory
+git add directory

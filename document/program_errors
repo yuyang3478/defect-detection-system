@@ -1,0 +1,25 @@
+1,AttributeError: 'module' object has no attribute 'Graph'
+#Uninstall tensorflow
+    pip3 uninstall tensorflow-gpu
+#Delete pip caches
+    rm -rf ~/.cache/pip/*
+#Re-install tensorflow
+pip3 install -U tensorflow-gpu
+
+2,ImportError: /usr/local/lib/python3.5/dist-packages/PyQt5/QtCore.so: undefined symbol: PySlice_AdjustIndices
+sudo pip3 install PyQt5==5.9.1
+
+3,黑屏，终端显示QOpenGLShaderProgram::uniformLocation(qt_Matrix): shader program is not linked QOpenG
+cd /etc/ld.so.conf.d
+目录中有 i386-linux-gnu_GL.conf and x86_64-linux-gnu_GL.conf等文件
+cat x86_64-linux-gnu_GL.conf
+/usr/lib/nvidia-340
+/usr/lib32/nvidia-340
+但是文件i386-linux-gnu_GL.conf 是空文件，这时需要把 x86_64-linux-gnu_GL.conf中的内容复制到i386-linux-gnu_GL.conf
+sudo ldconfig
+
+4,单独安装webengine
+sudo apt-get install qtwebengine5-dev qtpositioning5-dev
+
+5.Qt5.9.1 安装目录
+http://download.qt.io/official_releases/qt/5.9/5.9.1/

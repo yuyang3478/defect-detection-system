@@ -1,0 +1,71 @@
+ubuntu上传代码文件到github
+2017年05月18日 00:04:19
+阅读数：2584
+
+1.申请一个github帐号，然后新建一个repositories，取个名字。本例所取名字为Student-Information-Manage-System
+
+2.在ubuntu上安装git
+
+sudo apt-get install git
+
+3.生成密钥 ssh-keygen -t rsa -C "youremail@mail.com"
+
+其中"youremail@mail.com"是你的邮箱名。之后会要求确认路径和输入密码，我们使用默认的一路回车就行。
+
+成功的话会在～/下生成.ssh文件夹，按住ctrl+h可以显示隐藏文件夹，点进去，打开id_rsa.pub，复制里面的key。
+
+4.回到github，进入Account Setting，左边选择SSH Keys，Add SSH，title随便填，粘贴key.
+
+
+5.验证是否成功，输入ssh -T git@github.com，如果看到如下信息，表示成功连上github.
+
+
+
+6.在将本地仓库上传到github之前，需要设置username和email，因为github每次commit都会记录他们。
+
+git config --global user.name "onlyou2030"
+
+git config --global user.email 529647632@qq.com
+
+7.cd要上传的仓库路径，添加远程地址
+
+git remote add origin git@github.com:yourName/yourRepo.git
+
+后面的yourName和yourRepo表示你在github的用户名和刚才新建的仓库，加完之后进入.git，打开config，这里会多出一个remote "origin"内容，
+
+这就是刚才添加的远程地址，也可以直接修改config来配置远程地址。
+
+8.提交，上传
+
+1）接下来在本地仓库添加一些文件，比如README(注意先在本地仓库添加README文件后执行下面命令)
+
+git add README
+
+git commit -m "first commit"
+
+2）上传到github
+
+git push origin master
+
+注意：git push命令将本地仓库推送到远程服务器，git pull相反。
+
+注意：在上面提交命令后，可能会出现“因为您当前分支的最新提交落后于其对应的远程分支”等类似错误，
+
+需要先获取远端更新并与本地合并，再git push。
+
+合并操作如下：
+
+git fetch origin   //获取远程更新
+
+git merge origin/master
+
+在git push则可以成功。
+
+如果想要添加所有文件，可以使用“git add .”代替。
+
+添加完成后可以在github上看到所有添加的文件
+
+
+演示项目地址为：https://github.com/onlyou2030/Student-Information-Manage-System
+
+

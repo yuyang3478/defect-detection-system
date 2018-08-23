@@ -27,15 +27,17 @@ class Bash():
         self.timer = threading.Timer(self.inter_time, self.flush, [stdout,stderr])
         self.timer.start()
 
-    def excute(self,shfile,timeout=1000000):
+    def excute(self,shfile,showinfo=True,timeout=1000000):
         stdout = open('stdout.log', 'wb')
         stderr = open('stdout.log', 'wb')
         cmd = ['bash', shfile]
         self.process = subprocess.Popen(cmd, stdout=stdout.fileno(), stderr=stderr.fileno())
-        self.timer = threading.Timer(self.inter_time, self.flush, [stdout,stderr])
-        self.timer.start()
 
-        self.show_info()
+        if showinfo:
+            self.timer = threading.Timer(self.inter_time, self.flush, [stdout,stderr])
+            self.timer.start()
+
+            self.show_info()
 
         # stdout, stderr = self.process.communicate()
         # print(self.process.returncode)

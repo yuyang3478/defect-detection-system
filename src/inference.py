@@ -22,8 +22,6 @@ import time
 class DeepLabModel(object):
     """Class to load deeplab model and run inference."""
 
-
-
     def __init__(self):
         self.config = configparser.ConfigParser()
         self.config.read('config/model.ini')
@@ -31,8 +29,6 @@ class DeepLabModel(object):
         frozen_pb = self.config['inference']['frozen_pb']
         self.INPUT_SIZE = self.config['inference']['vis_crop_size']
         self.vis_logdir = self.config['inference']['vis_logdir']
-
-
         self.INPUT_TENSOR_NAME = 'ImageTensor:0'
         self.OUTPUT_TENSOR_NAME = 'SemanticPredictions:0'
 
@@ -91,9 +87,15 @@ class VisualSeg(object):
         vis_logdir = self.config['inference']['vis_logdir']
         self.vis_logdir = os.path.join(pwd.getpwuid(os.getuid()).pw_dir,vis_logdir)
 
+        # self.LABEL_NAMES = np.asarray([
+        #     'background', 'crack'
+        # ])
         self.LABEL_NAMES = np.asarray([
-            'background', 'crack'
+            'background', 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
+            'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike',
+            'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tv'
         ])
+
         self.FULL_LABEL_MAP = np.arange(len(self.LABEL_NAMES)).reshape(len(self.LABEL_NAMES), 1)
         self.FULL_COLOR_MAP = self.label_to_color_image(self.FULL_LABEL_MAP)
 
@@ -198,7 +200,7 @@ class VisualSeg(object):
         resized_im, seg_map = self.MODEL.run(original_im)
 
         self.vis_segmentation(resized_im, seg_map,fname)
-        print("检测图片 "+ fname,", 耗时 ",str(time.time()-start))
+        print("检测图片 "+ fname,", 结果输出至： exp/vis 文件夹。")
 
 
 

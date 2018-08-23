@@ -101,11 +101,11 @@ Name2Labels defaulfLabels() {
 //	labels["rail track"          ] = LabelInfo("rail track"          , "flat"         ,  10, 1, QColor(230,150,140));
 //	labels["building"            ] = LabelInfo("building"            , "construction" ,  11, 2, QColor( 70, 70, 70));
 	labels["acrack"               ] = LabelInfo("acrack"              , "construction" ,  12, 2, QColor(245, 124,0));
-	labels["fence"               ] = LabelInfo("fence"               , "construction" ,  13, 2, QColor(190,153,153));
-	labels["guard rail"          ] = LabelInfo("guard rail"          , "construction" ,  14, 2, QColor(180,165,180));
+	labels["abackground"          ] = LabelInfo("abackground"         , "vehicle" ,  13, 2, QColor(190,153,153));
+	labels["pole"          ] = LabelInfo("pole"          , "human" ,  14, 2, QColor(180,165,180));
 	labels["bridge"              ] = LabelInfo("bridge"              , "construction" ,  15, 2, QColor(150,100,100));
 	labels["tunnel"              ] = LabelInfo("tunnel"              , "construction" ,  16, 2, QColor(150,120, 90));
-	labels["pole"                ] = LabelInfo("pole"                , "object"       ,  17, 3, QColor(153,153,153));
+	labels["ablable"                ] = LabelInfo("ablable"                , "object"       ,  17, 3, QColor(153,153,153));
 	labels["polegroup"           ] = LabelInfo("polegroup"           , "object"       ,  18, 3, QColor(153,153,153));
 	labels["traffic light"       ] = LabelInfo("traffic light"       , "object"       ,  19, 3, QColor(250,170, 30));
 	labels["traffic sign"        ] = LabelInfo("traffic sign"        , "object"       ,  20, 3, QColor(220,220,  0));

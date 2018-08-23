@@ -8,8 +8,11 @@ import cv2
 
 def main(argv):
     #capture from camera at location 0
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(0)
     cap1 = cv2.VideoCapture(1)
+
+
+
     # print(cap.isOpened())
     print(cap1.isOpened())
 

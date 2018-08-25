@@ -14,7 +14,7 @@ import configparser
 import tensorflow as tf
 import pwd
 import time
-
+import cv2
 
 #@title Helper methods
 
@@ -87,14 +87,14 @@ class VisualSeg(object):
         vis_logdir = self.config['inference']['vis_logdir']
         self.vis_logdir = os.path.join(pwd.getpwuid(os.getuid()).pw_dir,vis_logdir)
 
-        # self.LABEL_NAMES = np.asarray([
-        #     'background', 'crack'
-        # ])
         self.LABEL_NAMES = np.asarray([
-            'background', 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
-            'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike',
-            'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tv'
+            'background', 'crack'
         ])
+        # self.LABEL_NAMES = np.asarray([
+        #     'background', 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
+        #     'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike',
+        #     'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tv'
+        # ])
 
         self.FULL_LABEL_MAP = np.arange(len(self.LABEL_NAMES)).reshape(len(self.LABEL_NAMES), 1)
         self.FULL_COLOR_MAP = self.label_to_color_image(self.FULL_LABEL_MAP)
@@ -147,40 +147,21 @@ class VisualSeg(object):
 
 
     def vis_segmentation(self,image, seg_map,fname):
-      """Visualizes input image, segmentation map and overlay view."""
-      plt.figure(figsize=(15, 5))
-      grid_spec = gridspec.GridSpec(1, 4, width_ratios=[6, 6, 6, 1])
-
-      plt.subplot(grid_spec[0])
-      plt.imshow(image)
-      plt.axis('off')
-      plt.title('input image')
-
-      plt.subplot(grid_spec[1])
-      seg_image = self.label_to_color_image(seg_map).astype(np.uint8)
-      plt.imshow(seg_image)
-      plt.axis('off')
-      plt.title('segmentation map')
-
-      plt.subplot(grid_spec[2])
-      plt.imshow(image)
-      plt.imshow(seg_image, alpha=0.7)
-      plt.axis('off')
-      plt.title('segmentation overlay')
-
-      unique_labels = np.unique(seg_map)
-      ax = plt.subplot(grid_spec[3])
-      plt.imshow(
-          self.FULL_COLOR_MAP[unique_labels].astype(np.uint8), interpolation='nearest')
-      ax.yaxis.tick_right()
-      plt.yticks(range(len(unique_labels)), self.LABEL_NAMES[unique_labels])
-      plt.xticks([], [])
-      ax.tick_params(width=0.0)
-      plt.grid('off')
-
-      #save to vis directory
-      plt.savefig(os.path.join(self.vis_logdir,fname))
-      # plt.show()
+        image = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
+        seg_image = self.label_to_color_image(seg_map).astype(np.uint8)
+        seg_image = cv2.cvtColor(np.asarray(seg_image), cv2.COLOR_RGB2BGR)
+        alpha = 0.3
+        beta = 1 - alpha
+        gamma = 0
+        img_add = cv2.addWeighted(image, alpha, seg_image, beta, gamma)
+        seg_area = np.count_nonzero(seg_map == 1)
+        area = seg_map.shape[0]*seg_map.shape[1]
+        ratio = seg_area/area
+        if ratio>0.1:#01
+            path = os.path.join(self.vis_logdir, "ng_"+str(ratio)+" "+fname)
+        else:
+            path = os.path.join(self.vis_logdir, "ps_"+str(ratio)+" " + fname)
+        cv2.imwrite(path,img_add)
 
     def run_visualization(self,url):
         start  = time.time()
@@ -200,9 +181,7 @@ class VisualSeg(object):
         resized_im, seg_map = self.MODEL.run(original_im)
 
         self.vis_segmentation(resized_im, seg_map,fname)
-        print("检测图片 "+ fname,", 结果输出至： exp/vis 文件夹。")
-
-
+        print("识别图片 "+ fname)
 
 if __name__=="__main__":
     config = configparser.ConfigParser()

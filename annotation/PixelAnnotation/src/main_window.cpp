@@ -172,7 +172,7 @@ void MainWindow::setStarAtNameOfTab(bool star) {
 }
 
 void MainWindow::open_anno_images(){
-    QString curr_open_dir = QString::fromStdString(QDir::homePath().toStdString()+"/models/research/deeplab/datasets/crack/imganno/raw/images");
+    QString curr_open_dir = QString::fromStdString(QDir::homePath().toStdString()+"/models/research/deeplab/datasets/crack/view/X_训练图像");
 //	QString curr_open_dir = QString::fromStdString("models/research/deeplab/datasets/crack/imganno/raw/images");
 //	QString openedDir = QFileDialog::getExistingDirectory(this, "Choose a directory to be read in", curr_open_dir);
 //	if (openedDir.isEmpty())

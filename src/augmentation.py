@@ -13,6 +13,9 @@ class DataAug():
         self.config = configparser.ConfigParser()
         self.config.read('config/model.ini')
         self.root = self.config['augmentation']['root']
+        self.annotation_folder = self.config["annotation"]['raw']
+        self.annotation_folder= getAbsolutePath(self.annotation_folder)
+
         self.root = getAbsolutePath(self.root)
         self.num_after_gen = self.config.getint('augmentation','totalnum')
         self.isdemostrate = self.config.getboolean('augmentation', 'isdemostrate')  # getboolean(section, options)
@@ -35,8 +38,8 @@ class DataAug():
 
 
     def img_seg_correspondence(self,):
-        for f in os.listdir(self.seed_img):
-            srcf = os.path.join(self.seed_img, f)
+        for f in os.listdir(self.annotation_folder):
+            srcf = os.path.join(self.annotation_folder, f)
 
             if f.endswith("png"):
                 if "_watershed_mask" in f:
@@ -47,8 +50,12 @@ class DataAug():
                     tarf = os.path.join(self.seed_seg, f.replace("_watershed_mask", ""))
                     cv2.imwrite(tarf, img)
 
-                os.remove(srcf)
-
+                # os.remove(srcf)
+            if f.endswith("jpg"):
+                img_path = os.path.join(self.annotation_folder,f)
+                tarimg = os.path.join(self.seed_img, f)
+                img1 = cv2.imread(img_path)
+                cv2.imwrite(tarimg, img1)
         imglist = []
         seglist = []
         for f in os.listdir(self.seed_img):
@@ -115,7 +122,7 @@ class DataAug():
 
     def aug_img(self,):
         imgsount = len(
-            [name for name in os.listdir(self.seed_img) if os.path.isfile(os.path.join(self.seed_img, name))])
+            [name for name in os.listdir(self.seed_img) if os.path.isfile(os.path.join(self.seed_img, name)) and name.endswith("jpg")])
         if imgsount==0:
             print("there is no images to augmentation.")
             return

@@ -187,7 +187,7 @@ class DataAug():
                 print(f,"generating {} image.".format(i))
                 # seq.show_grid(images[0], cols=8, rows=8)
 
-        # self.write_txt()
+        self.write_txt()
     def write_txt(self,):
         train = os.path.join(self.ImageSets,"train.txt")
         val = os.path.join(self.ImageSets,"val.txt")

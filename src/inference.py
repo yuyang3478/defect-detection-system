@@ -16,15 +16,14 @@ import pwd
 import time
 import cv2
 
-#@title Helper methods
-
+inipath = 'config/model.ini'
 
 class DeepLabModel(object):
     """Class to load deeplab model and run inference."""
 
     def __init__(self):
         self.config = configparser.ConfigParser()
-        self.config.read('config/model.ini')
+        self.config.read(inipath)
         self.condefaults = self.config.defaults()
         frozen_pb = self.config['inference']['frozen_pb']
         self.INPUT_SIZE = self.config['inference']['vis_crop_size']
@@ -83,7 +82,7 @@ class VisualSeg(object):
     def __init__(self):
 
         self.config = configparser.ConfigParser()
-        self.config.read('config/model.ini')
+        self.config.read(inipath)
         vis_logdir = self.config['inference']['vis_logdir']
         self.vis_logdir = os.path.join(pwd.getpwuid(os.getuid()).pw_dir,vis_logdir)
 
@@ -156,11 +155,12 @@ class VisualSeg(object):
         img_add = cv2.addWeighted(image, alpha, seg_image, beta, gamma)
         seg_area = np.count_nonzero(seg_map == 1)
         area = seg_map.shape[0]*seg_map.shape[1]
-        ratio = seg_area/area
-        if ratio>0.1:#01
-            path = os.path.join(self.vis_logdir, "ng_"+str(ratio)+" "+fname)
+        rati = (seg_area/area)
+        ratio = "%.2f" % (rati*1000)
+        if rati>=0.001:#01
+            path = os.path.join(self.vis_logdir, "ng_"+(ratio)+"_"+fname)
         else:
-            path = os.path.join(self.vis_logdir, "ps_"+str(ratio)+" " + fname)
+            path = os.path.join(self.vis_logdir, "ps_"+(ratio)+"_" + fname)
         cv2.imwrite(path,img_add)
 
     def run_visualization(self,url):
@@ -185,7 +185,7 @@ class VisualSeg(object):
 
 if __name__=="__main__":
     config = configparser.ConfigParser()
-    config.read('config/model.ini')
+    config.read(inipath)
     imroot = config['inference']['images']
     imroot = os.path.join(pwd.getpwuid(os.getuid()).pw_dir, imroot)
     vs = VisualSeg()

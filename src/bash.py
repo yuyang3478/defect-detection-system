@@ -3,6 +3,7 @@ from threading import Timer
 import signal
 import time
 import threading
+from PyQt5.QtWidgets import *
 
 class Bash():
 
@@ -28,6 +29,7 @@ class Bash():
         self.timer.start()
 
     def excute(self,shfile,showinfo=True,timeout=1000000):
+
         stdout = open('stdout.log', 'wb')
         stderr = open('stdout.log', 'wb')
         cmd = ['bash', shfile]
